@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .product-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .product-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        input[type="text"], input[type="number"], select {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h1>Place Your Order</h1>
+<form action="/order" method="post">
+    <div th:each="product : ${products}" class="product-item">
+        <input type="checkbox" name="productId" th:value="${product.id}">
+        <span th:text="${product.name}"></span> - <span th:text="${product.price}"></span>
+    </div>
+    <input type="text" name="preferences" placeholder="Preferences">
+    <button type="submit">Order</button>
+</form>
+</body>
+</html>

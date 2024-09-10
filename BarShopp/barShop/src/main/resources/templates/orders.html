@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px auto;
+            max-width: 600px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        form {
+            margin-left: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+<h1>Orders</h1>
+<ul>
+    <li th:each="order : ${orders}">
+        <div>
+            <span><strong>Order Number:</strong> <span th:text="${order.orderNumber}"></span></span><br>
+            <span><strong>Product:</strong> <span th:text="${order.product.name}"></span></span><br>
+            <span><strong>Preferences:</strong> <span th:text="${order.preferences}"></span></span><br>
+            <span><strong>Order Time:</strong> <span th:text="${order.orderTime}"></span></span>
+        </div>
+        <form th:action="@{/orders/delete/{id}(id=${order.id})}" method="post">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+</body>
+</html>

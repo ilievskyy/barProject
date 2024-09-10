@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        form {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input[type="text"], input[type="number"], select {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
+        }
+        select {
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h1>Edit Product</h1>
+<form th:action="@{/menu/edit/product/{id}(id=${product.id})}" method="post">
+    <input type="text" name="name" th:value="${product.name}" placeholder="Product Name" required>
+    <select name="category">
+        <option value="COFFEE" th:selected="${product.category == 'COFFEE'}">Coffee</option>
+        <option value="DRINK" th:selected="${product.category == 'DRINK'}">Drink</option>
+        <option value="ALCOHOLIC" th:selected="${product.category == 'ALCOHOLIC'}">Alcoholic</option>
+    </select>
+    <input type="text" name="description" th:value="${product.description}" placeholder="Description">
+    <input type="number" name="price" th:value="${product.price}" step="0.01" placeholder="Price">
+    <button type="submit">Save Changes</button>
+</form>
+</body>
+</html>

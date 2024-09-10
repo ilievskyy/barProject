@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        div {
+            margin-bottom: 20px;
+        }
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Align items vertically */
+        }
+        .product-info {
+            flex: 1; /* Take up remaining space */
+            text-align: left; /* Align text to the left */
+            display: flex; /* Use flexbox for product info */
+            justify-content: space-between; /* Distribute space between name and price */
+        }
+        .product-info span {
+            flex: 1; /* Ensure each span takes full width */
+            text-align: center; /* Center text within spans */
+        }
+        .product-info .name {
+            text-align: left; /* Left-align the product name */
+        }
+        .manage-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center buttons vertically */
+        }
+        form {
+            margin: 5px; /* Adjust margin for form elements */
+        }
+        input[type="text"], input[type="number"], select {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-bottom: 5px; /* Add spacing between buttons */
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .order-button {
+            margin-top: 20px;
+            padding: 15px 40px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .order-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h1>Menu</h1>
+<div>
+    <a href="/menu/category/COFFEE">Coffee</a>
+    <a href="/menu/category/DRINK">Drinks</a>
+    <a href="/menu/category/ALCOHOLIC">Alcoholic</a>
+</div>
+<ul>
+    <!-- Column headers -->
+    <li>
+        <div><strong>Product</strong></div>
+        <div><strong>Price</strong></div>
+        <div><strong>Manage</strong></div>
+    </li>
+    <!-- List of products -->
+    <li th:each="product : ${products}">
+        <div class="product-info">
+            <span class="name" th:text="${product.name}"></span>
+            <span th:text="${product.price}"></span> <!-- Center price text -->
+        </div>
+        <div class="manage-buttons">
+            <!-- Ensure the form action URL is correctly formatted -->
+            <form th:action="@{'/menu/delete/' + ${product.id}}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+            <a th:href="@{/menu/edit/product/{id}(id=${product.id})}">Edit</a> <!-- Edit button -->
+        </div>
+    </li>
+</ul>
+<form th:action="@{/menu/add}" method="post">
+    <input type="text" name="name" placeholder="Product Name" required>
+    <input type="number" name="price" placeholder="Price" required>
+    <select name="category" required>
+        <option value="" disabled selected>Select Category</option>
+        <option value="COFFEE">Coffee</option>
+        <option value="DRINK">Drinks</option>
+        <option value="ALCOHOLIC">Alcoholic</option>
+    </select>
+    <button type="submit">Add Product</button>
+</form>
+<button class="order-button" onclick="window.location.href='/order'">Order</button>
+</body>
+</html>
